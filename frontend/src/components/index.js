@@ -9,4 +9,5 @@ export { default as PlayPage } from './pages/PlayPage';
 export { default as ProfilePage } from './pages/ProfilePage';
 
 // UI Components
-export { default as FlashCard } from './FlashCard'; 
+export { default as FlashCard } from './FlashCard';
+export { default as TestCard } from './TestCard'; 

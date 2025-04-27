@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
-import { Container, Row, Col, Tab, Nav, Card } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { Container, Row, Col, Tab, Nav, Card, Spinner, Alert } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useResponsive } from '../../hooks';
 import FlashCard from '../FlashCard';
+import TestCard from '../TestCard';
+import { testCardApi } from '../../services/api';
 
-// Sample flashcard data
+// Sample flashcard data for the rules tab
 const flashCardsData = [
   {
     id: 1,
@@ -32,25 +34,87 @@ const flashCardsData = [
   }
 ];
 
+// Mock user ID (in a real app, this would come from authentication)
+const MOCK_USER_ID = 'user123';
+
 const TrainingPage = () => {
   const { isMobile } = useResponsive();
   const [activeTab, setActiveTab] = useState('rules');
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
+  
+  // Test tab state
+  const [testCard, setTestCard] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [testStats, setTestStats] = useState({
+    total: 0,
+    correct: 0
+  });
 
+  // Load a test card when switching to the test tab
+  useEffect(() => {
+    if (activeTab === 'test' && !testCard && !loading) {
+      fetchRandomTestCard();
+    }
+  }, [activeTab, testCard, loading]);
+
+  // Handle moving to next card in the rules tab
   const handleNextCard = () => {
     if (currentCardIndex < flashCardsData.length - 1) {
       setCurrentCardIndex(currentCardIndex + 1);
     }
   };
 
+  // Handle moving to previous card in the rules tab
   const handlePrevCard = () => {
     if (currentCardIndex > 0) {
       setCurrentCardIndex(currentCardIndex - 1);
     }
   };
+  
+  // Fetch a random test card from the API
+  const fetchRandomTestCard = async () => {
+    setLoading(true);
+    setError(null);
+    
+    try {
+      const card = await testCardApi.getRandomCard();
+      setTestCard(card);
+    } catch (err) {
+      console.error('Error fetching random test card:', err);
+      setError('Failed to load test card. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+  // Handle submitting a test result
+  const handleSubmitTestResult = async (cardId, selectedOption) => {
+    try {
+      const isCorrect = selectedOption === testCard.correct_answer;
+      
+      // Update local stats
+      setTestStats(prev => ({
+        total: prev.total + 1,
+        correct: prev.correct + (isCorrect ? 1 : 0)
+      }));
+      
+      // Submit to backend
+      await testCardApi.submitTestResult(cardId, MOCK_USER_ID, selectedOption);
+    } catch (err) {
+      console.error('Error submitting test result:', err);
+      // We could show an error message here, but for UX we don't want to disrupt the test flow
+    }
+  };
+  
+  // Handle moving to the next test card
+  const handleNextTestCard = async () => {
+    setTestCard(null);
+    fetchRandomTestCard();
+  };
 
   return (
-    <Container fluid className="py-4">
+    <Container fluid className="py-4 training-page-container">
       <Row>
         <Col xs={12} className={`px-${isMobile ? '3' : '4'}`}>
           <Link 
@@ -103,14 +167,68 @@ const TrainingPage = () => {
                     />
                   </Tab.Pane>
                   <Tab.Pane eventKey="test">
-                    <Card className="border-0 shadow-sm p-4">
-                      <Card.Body>
-                        <h3>Раздел "Тест"</h3>
-                        <p className="text-muted">
-                          Здесь будет размещен тестовый контент. В настоящее время этот раздел пуст.
-                        </p>
-                      </Card.Body>
-                    </Card>
+                    {testStats.total > 0 && (
+                      <div className="mb-4">
+                        <Card className="border-0 shadow-sm">
+                          <Card.Body className="d-flex justify-content-between align-items-center">
+                            <div>
+                              <h5 className="mb-0">Ваша статистика</h5>
+                            </div>
+                            <div className="d-flex">
+                              <div className="text-center me-4">
+                                <div className="fs-5 fw-bold">{testStats.total}</div>
+                                <div className="text-muted small">Всего</div>
+                              </div>
+                              <div className="text-center me-4">
+                                <div className="fs-5 fw-bold text-success">{testStats.correct}</div>
+                                <div className="text-muted small">Правильно</div>
+                              </div>
+                              <div className="text-center">
+                                <div className="fs-5 fw-bold text-danger">{testStats.total - testStats.correct}</div>
+                                <div className="text-muted small">Неправильно</div>
+                              </div>
+                            </div>
+                          </Card.Body>
+                        </Card>
+                      </div>
+                    )}
+                    
+                    {loading ? (
+                      <Card className="border-0 shadow-sm">
+                        <Card.Body className="p-5 text-center">
+                          <Spinner animation="border" role="status" variant="primary" className="mb-3" />
+                          <p className="mb-0">Загрузка тестовой карточки...</p>
+                        </Card.Body>
+                      </Card>
+                    ) : error ? (
+                      <Alert variant="danger">
+                        <p className="mb-2">{error}</p>
+                        <button 
+                          className="btn btn-sm btn-outline-danger" 
+                          onClick={fetchRandomTestCard}
+                        >
+                          Попробовать снова
+                        </button>
+                      </Alert>
+                    ) : testCard ? (
+                      <TestCard 
+                        card={testCard} 
+                        onSubmitResult={handleSubmitTestResult} 
+                        onNextCard={handleNextTestCard}
+                      />
+                    ) : (
+                      <Card className="border-0 shadow-sm">
+                        <Card.Body className="p-5 text-center">
+                          <p className="mb-3">Нет доступных тестовых карточек</p>
+                          <button 
+                            className="btn btn-primary" 
+                            onClick={fetchRandomTestCard}
+                          >
+                            Загрузить карточку
+                          </button>
+                        </Card.Body>
+                      </Card>
+                    )}
                   </Tab.Pane>
                 </Tab.Content>
               </Col>
