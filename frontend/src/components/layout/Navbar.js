@@ -15,7 +15,7 @@ const AppNavbar = () => {
     <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect className="py-2">
       <Container fluid className="px-3">
         <Navbar.Brand as={Link} to="/" className="d-flex align-items-center">
-          <span className="ms-2">Учебное приложение</span>
+          <span className="ms-2">Шеш-беш</span>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">

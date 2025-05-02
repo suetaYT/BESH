@@ -44,7 +44,7 @@ const TestCard = ({ card, onSubmitResult, onNextCard }) => {
     <Card className="border-0 shadow-sm">
       <Card.Body className="p-4">
         <div className="d-flex justify-content-between mb-3 align-items-center">
-          <h3 className="mb-0">Тестовая карточка #{card.card_number}</h3>
+          <h3 className="mb-0">Вопрос {card.card_number}</h3>
           {submitted && (
             <span className={`badge ${isCorrect ? 'bg-success' : 'bg-danger'} fs-6`}>
               {isCorrect ? 'Правильно' : 'Неправильно'}
