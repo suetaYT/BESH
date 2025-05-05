@@ -109,6 +109,7 @@ const TrainingPage = () => {
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
   
   // Test tab state
+  const [allCards, setAllCards] = useState([]);
   const [testCard, setTestCard] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -117,12 +118,12 @@ const TrainingPage = () => {
     correct: 0
   });
 
-  // Load a test card when switching to the test tab
+  // Load all test cards when switching to the test tab
   useEffect(() => {
-    if (activeTab === 'test' && !testCard && !loading) {
-      fetchRandomTestCard();
+    if (activeTab === 'test' && allCards.length === 0 && !loading) {
+      fetchAllTestCards();
     }
-  }, [activeTab, testCard, loading]);
+  }, [activeTab, allCards.length, loading]);
 
   // Handle moving to next card in the rules tab
   const handleNextCard = () => {
@@ -138,17 +139,30 @@ const TrainingPage = () => {
     }
   };
   
-  // Fetch a random test card from the API
-  const fetchRandomTestCard = async () => {
+  // Fetch all test cards from the API
+  const fetchAllTestCards = async () => {
     setLoading(true);
     setError(null);
     
     try {
-      const card = await testCardApi.getRandomCard();
-      setTestCard(card);
+      console.log('Начинаем загрузку карточек...');
+      const cards = await testCardApi.getAllCards();
+      console.log('Получен ответ API:', cards);
+      setAllCards(cards);
+      
+      if (cards && cards.length > 0) {
+        console.log(`Получено ${cards.length} карточек`);
+        // Select a random card to start
+        const randomIndex = Math.floor(Math.random() * cards.length);
+        console.log(`Выбрана случайная карточка с индексом ${randomIndex}:`, cards[randomIndex]);
+        setTestCard(cards[randomIndex]);
+      } else {
+        console.log('Карточки не найдены в ответе API');
+        setError('No test cards available');
+      }
     } catch (err) {
-      console.error('Error fetching random test card:', err);
-      setError('Failed to load test card. Please try again.');
+      console.error('Error fetching all test cards:', err);
+      setError('Failed to load test cards. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -173,10 +187,16 @@ const TrainingPage = () => {
     }
   };
   
-  // Handle moving to the next test card
-  const handleNextTestCard = async () => {
-    setTestCard(null);
-    fetchRandomTestCard();
+  // Handle moving to the next test card (now selecting locally)
+  const handleNextTestCard = () => {
+    if (allCards.length > 0) {
+      // Select a random card from the preloaded cards
+      const randomIndex = Math.floor(Math.random() * allCards.length);
+      setTestCard(allCards[randomIndex]);
+    } else {
+      // If somehow we don't have cards, try to fetch them
+      fetchAllTestCards();
+    }
   };
 
   return (
@@ -262,7 +282,7 @@ const TrainingPage = () => {
                         <p className="mb-2">{error}</p>
                         <button 
                           className="btn btn-sm btn-outline-danger" 
-                          onClick={fetchRandomTestCard}
+                          onClick={fetchAllTestCards}
                         >
                           Попробовать снова
                         </button>
@@ -279,7 +299,7 @@ const TrainingPage = () => {
                           <p className="mb-3">Нет доступных тестовых карточек</p>
                           <button 
                             className="btn btn-primary" 
-                            onClick={fetchRandomTestCard}
+                            onClick={fetchAllTestCards}
                           >
                             Загрузить карточку
                           </button>

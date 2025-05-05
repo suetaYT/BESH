@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, Button, Form, Alert } from 'react-bootstrap';
 import { useResponsive } from '../hooks';
 
@@ -7,6 +7,24 @@ const TestCard = ({ card, onSubmitResult, onNextCard }) => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [submitted, setSubmitted] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
+  
+  // Добавим отладочный лог при монтировании и обновлении карточки
+  useEffect(() => {
+    console.log('TestCard рендеринг с данными:', card);
+    if (!card) {
+      console.warn('Карточка не получена или пустой объект!');
+    }
+  }, [card]);
+  
+  // Проверим, что карточка существует, прежде чем рендерить
+  if (!card) {
+    console.error('TestCard получил null или undefined вместо объекта карточки');
+    return (
+      <div className="alert alert-danger">
+        Ошибка загрузки карточки. Данные отсутствуют.
+      </div>
+    );
+  }
   
   const handleOptionChange = (optionIndex) => {
     if (!submitted) {

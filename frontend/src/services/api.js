@@ -13,6 +13,19 @@ const apiClient = axios.create({
 
 // Test card API methods
 export const testCardApi = {
+  // Get all test cards
+  getAllCards: async () => {
+    try {
+      console.log('Отправка запроса на /test-cards/');
+      const response = await apiClient.get('/test-cards/');
+      console.log('Получен ответ:', response);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching all test cards:', error);
+      throw error;
+    }
+  },
+  
   // Get a random test card
   getRandomCard: async () => {
     try {

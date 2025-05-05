@@ -22,6 +22,25 @@ def api_root(request):
 
 @api_view(['GET'])
 @permission_classes([AllowAny])
+def get_all_test_cards(request):
+    """Get all test cards at once"""
+    cards = TestCard.objects.all()
+    print(f"Found {cards.count()} test cards")
+    
+    # Проверим первую карточку и ее данные
+    if cards.exists():
+        first_card = cards.first()
+        print(f"First card: ID={first_card.id}, Card Number={first_card.card_number}")
+        print(f"Question: {first_card.question}")
+        print(f"Options: {first_card.option_1}, {first_card.option_2}, {first_card.option_3}, {first_card.option_4}")
+    
+    serializer = TestCardSerializer(cards, many=True)
+    print(f"Serialized {len(serializer.data)} cards")
+    
+    return Response(serializer.data)
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
 def get_random_test_card(request):
     """
     Get a random test card. 
