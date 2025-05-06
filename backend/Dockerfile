@@ -17,6 +17,14 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy project files
 COPY . .
 
+# Create a non-root user
+RUN useradd -m appuser && chown -R appuser:appuser /app
+USER appuser
+
+# Set environment variables
+ENV PYTHONUNBUFFERED=1
+ENV DJANGO_SETTINGS_MODULE=backend.settings
+
 # Collect static files
 RUN python manage.py collectstatic --noinput
 
@@ -25,4 +33,5 @@ RUN python manage.py migrate
 
 EXPOSE 8000
 
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "backend.wsgi:application"] 
+# Use shell form to allow environment variable expansion
+CMD gunicorn --bind 0.0.0.0:8000 --workers 2 --timeout 120 backend.wsgi:application 
