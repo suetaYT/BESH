@@ -14,7 +14,7 @@ class Command(BaseCommand):
                 'option_3': '15',
                 'option_4': '20',
                 'correct_answer': 3,
-                'image_url': 'https://via.placeholder.com/400x200?text=React+Hooks'
+                'image_url': '/boardimg2.jpg'
             },
             {
                 'card_number': 2,
@@ -24,7 +24,7 @@ class Command(BaseCommand):
                 'option_3': 'В зависимости от выпавших кубиков',
                 'option_4': 'В любом направлении, по желанию игрока',
                 'correct_answer': 1,
-                'image_url': 'https://via.placeholder.com/400x200?text=REST+API'
+                'image_url': '/boardimg2.jpg'
             },
             {
                 'card_number': 3,
@@ -34,7 +34,7 @@ class Command(BaseCommand):
                 'option_3': 'Ставить шесть фишек в ряд',
                 'option_4': 'Ставить фишку на клетку, где уже стоит фишка противника',
                 'correct_answer': 4,
-                'image_url': 'https://via.placeholder.com/400x200?text=MVC+Architecture'
+                'image_url': '/boardimg2.jpg'
             },
             {
                 'card_number': 4,
@@ -44,7 +44,7 @@ class Command(BaseCommand):
                 'option_3': 'С разбега в карьер',
                 'option_4': 'Из дома во двор',
                 'correct_answer': 2,
-                'image_url': 'https://via.placeholder.com/400x200?text=Database+Systems'
+                'image_url': '/boardimg2.jpg'
             }
         ]
         
