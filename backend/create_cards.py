@@ -11,8 +11,8 @@ from api.models import TestCard
 def create_test_cards():
     """Создает тестовые карточки в базе данных"""
     
-    # Базовый URL для изображений на фронтенде
-    base_url = '/images/cards/'
+    # Доступные изображения в public
+    # boardimgrules2.jpg, boardimgrules5.jpg, boardimgrules6.jpg, boardimgrules9.jpg
     
     test_cards = [
         {
@@ -23,7 +23,7 @@ def create_test_cards():
             'option_3': '15',
             'option_4': '20',
             'correct_answer': 3,
-            'image_url': f'{base_url}card1.jpg'
+            'image_url': '/boardimg2.jpg'
         },
         {
             'card_number': 2,
@@ -33,7 +33,7 @@ def create_test_cards():
             'option_3': 'В зависимости от выпавших кубиков',
             'option_4': 'В любом направлении, по желанию игрока',
             'correct_answer': 1,
-            'image_url': f'{base_url}card2.jpg'
+            'image_url': '/boardimg2.jpg'
         },
         {
             'card_number': 3,
@@ -43,7 +43,7 @@ def create_test_cards():
             'option_3': 'Ставить шесть фишек в ряд',
             'option_4': 'Ставить фишку на клетку, где уже стоит фишка противника',
             'correct_answer': 4,
-            'image_url': f'{base_url}card3.jpg'
+            'image_url': '/boardimg2.jpg'
         },
         {
             'card_number': 4,
@@ -53,7 +53,7 @@ def create_test_cards():
             'option_3': 'С разбега в карьер',
             'option_4': 'Из дома во двор',
             'correct_answer': 2,
-            'image_url': f'{base_url}card4.jpg'
+            'image_url': '/boardimg2.jpg'
         },
         {
             'card_number': 5,
@@ -63,7 +63,7 @@ def create_test_cards():
             'option_3': '8 на 8 клеток',
             'option_4': '64 клетки в форме ромба',
             'correct_answer': 2,
-            'image_url': f'{base_url}card5.jpg'
+            'image_url': '/boardimgrules5.jpg'
         },
         {
             'card_number': 6,
@@ -73,7 +73,7 @@ def create_test_cards():
             'option_3': 'Три',
             'option_4': 'Четыре',
             'correct_answer': 2,
-            'image_url': f'{base_url}card6.jpg'
+            'image_url': '/boardimgr2.jpg'
         },
         {
             'card_number': 7,
@@ -83,17 +83,17 @@ def create_test_cards():
             'option_3': 'Оба игрока',
             'option_4': 'Никто',
             'correct_answer': 1,
-            'image_url': f'{base_url}card7.jpg'
+            'image_url': '/boardimgrules13.jpg'
         },
         {
             'card_number': 8,
-            'question': 'Что происходит при выпадании игрок одинаковых кубиков?',
+            'question': 'Что происходит при выпадании игроку одинаковых кубиков?',
             'option_1': 'Игрок пропускает ход',
             'option_2': 'Игрок ходит только один из этих кубиков',
             'option_3': 'Игрок ходит выпавшие кубики дважды',
             'option_4': 'Не происходит ничего, обычный ход',
             'correct_answer': 3,
-            'image_url': f'{base_url}card8.jpg'
+            'image_url': '/boardimgrules9.jpg'
         }
     ]
     
