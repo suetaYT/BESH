@@ -11,8 +11,8 @@ from api.models import TestCard
 def create_test_cards():
     """Создает тестовые карточки в базе данных"""
     
-    # Базовый URL для изображений (локальный путь)
-    base_url = '/media/cards/'
+    # Базовый URL для изображений на фронтенде
+    base_url = '/images/cards/'
     
     test_cards = [
         {
@@ -74,6 +74,26 @@ def create_test_cards():
             'option_4': 'Четыре',
             'correct_answer': 2,
             'image_url': f'{base_url}card6.jpg'
+        },
+        {
+            'card_number': 7,
+            'question': 'Кто из игроков может начать вывод фишек при такой ситуации?',
+            'option_1': 'Только белые',
+            'option_2': 'Только черные',
+            'option_3': 'Оба игрока',
+            'option_4': 'Никто',
+            'correct_answer': 1,
+            'image_url': f'{base_url}card7.jpg'
+        },
+        {
+            'card_number': 8,
+            'question': 'Что происходит при выпадании игрок одинаковых кубиков?',
+            'option_1': 'Игрок пропускает ход',
+            'option_2': 'Игрок ходит только один из этих кубиков',
+            'option_3': 'Игрок ходит выпавшие кубики дважды',
+            'option_4': 'Не происходит ничего, обычный ход',
+            'correct_answer': 3,
+            'image_url': f'{base_url}card8.jpg'
         }
     ]
     
