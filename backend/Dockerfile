@@ -2,11 +2,18 @@ FROM python:3.9-slim
 
 WORKDIR /app
 
+# Define build arguments
+ARG INSTALL_IMAGEMAGICK=false
+
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
     build-essential \
     libpq-dev \
     netcat-traditional \
+    curl \
+    && if [ "$INSTALL_IMAGEMAGICK" = "true" ] ; then \
+       apt-get install -y imagemagick ; \
+    fi \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements file
@@ -17,6 +24,23 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy project files
 COPY . .
+
+# Create media directories
+RUN mkdir -p /app/media/cards
+
+# Create sample images for cards if they don't exist
+RUN if [ "$INSTALL_IMAGEMAGICK" = "true" ] ; then \
+    for i in $(seq 1 6); do \
+      if [ ! -f /app/media/cards/card$i.jpg ]; then \
+        echo "Creating placeholder for card$i.jpg"; \
+        convert -size 400x200 -background lightblue -fill blue \
+        -pointsize 24 -gravity center label:"Карточка $i" \
+        /app/media/cards/card$i.jpg; \
+      fi; \
+    done; \
+    else \
+      echo "ImageMagick not installed, using placeholder URLs instead"; \
+    fi
 
 # Create a non-root user
 RUN useradd -m appuser && chown -R appuser:appuser /app

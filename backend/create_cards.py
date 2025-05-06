@@ -10,6 +10,10 @@ from api.models import TestCard
 
 def create_test_cards():
     """Создает тестовые карточки в базе данных"""
+    
+    # Базовый URL для изображений (локальный путь)
+    base_url = '/media/cards/'
+    
     test_cards = [
         {
             'card_number': 1,
@@ -19,7 +23,7 @@ def create_test_cards():
             'option_3': '15',
             'option_4': '20',
             'correct_answer': 3,
-            'image_url': 'https://via.placeholder.com/400x200?text=Card+1'
+            'image_url': f'{base_url}card1.jpg'
         },
         {
             'card_number': 2,
@@ -29,7 +33,7 @@ def create_test_cards():
             'option_3': 'В зависимости от выпавших кубиков',
             'option_4': 'В любом направлении, по желанию игрока',
             'correct_answer': 1,
-            'image_url': 'https://via.placeholder.com/400x200?text=Card+2'
+            'image_url': f'{base_url}card2.jpg'
         },
         {
             'card_number': 3,
@@ -39,7 +43,7 @@ def create_test_cards():
             'option_3': 'Ставить шесть фишек в ряд',
             'option_4': 'Ставить фишку на клетку, где уже стоит фишка противника',
             'correct_answer': 4,
-            'image_url': 'https://via.placeholder.com/400x200?text=Card+3'
+            'image_url': f'{base_url}card3.jpg'
         },
         {
             'card_number': 4,
@@ -49,9 +53,28 @@ def create_test_cards():
             'option_3': 'С разбега в карьер',
             'option_4': 'Из дома во двор',
             'correct_answer': 2,
-            'image_url': 'https://via.placeholder.com/400x200?text=Card+4'
+            'image_url': f'{base_url}card4.jpg'
+        },
+        {
+            'card_number': 5,
+            'question': 'Какой размер имеет стандартная доска для шеш-беш?',
+            'option_1': '15 на 15 клеток',
+            'option_2': '24 клетки (треугольники)',
+            'option_3': '8 на 8 клеток',
+            'option_4': '64 клетки в форме ромба',
+            'correct_answer': 2,
+            'image_url': f'{base_url}card5.jpg'
+        },
+        {
+            'card_number': 6,
+            'question': 'Сколько кубиков используется в игре шеш-беш?',
+            'option_1': 'Один',
+            'option_2': 'Два',
+            'option_3': 'Три',
+            'option_4': 'Четыре',
+            'correct_answer': 2,
+            'image_url': f'{base_url}card6.jpg'
         }
-        
     ]
     
     created_count = 0
