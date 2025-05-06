@@ -13,7 +13,7 @@ class TestCard(models.Model):
     option_3 = models.CharField(max_length=255)
     option_4 = models.CharField(max_length=255)
     correct_answer = models.IntegerField(help_text="Index of correct answer (1-4)")
-    image_url = models.URLField(blank=True, null=True)
+    image_url = models.CharField(max_length=255, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):

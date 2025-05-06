@@ -19,6 +19,7 @@ export const testCardApi = {
       console.log('Отправка запроса на /test-cards/');
       const response = await apiClient.get('/test-cards/');
       console.log('Получен ответ:', response);
+      console.log('Данные карточек:', response.data);
       return response.data;
     } catch (error) {
       console.error('Error fetching all test cards:', error);

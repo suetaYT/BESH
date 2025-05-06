@@ -45,6 +45,26 @@ class Command(BaseCommand):
                 'option_4': 'Из дома во двор',
                 'correct_answer': 2,
                 'image_url': '/boardimg2.jpg'
+            },
+            {
+                'card_number': 5,
+                'question': 'Кто из игроков может начать вывод фишек при такой ситуации?',
+                'option_1': 'Только белые',
+                'option_2': 'Только черные',
+                'option_3': 'Оба игрока',
+                'option_4': 'Никто',
+                'correct_answer': 1,
+                'image_url': '/boardimgrules13.jpg'
+            },
+            {
+                'card_number': 6,
+                'question': 'Что происходит при выпадании игроку двух одинаковых кубиков?',
+                'option_1': 'Игрок пропускает ход',
+                'option_2': 'Игрок ходит только один из этих кубиков',
+                'option_3': 'Игрок ходит выпавшие кубики дважды',
+                'option_4': 'Не происходит ничего, обычный ход',
+                'correct_answer': 3,
+                'image_url': '/boardimgrules9.jpg'
             }
         ]
         
@@ -53,6 +73,7 @@ class Command(BaseCommand):
         
         for card_data in test_cards:
             # Check if the card already exists
+            print(f"Processing card #{card_data['card_number']} with image_url: {card_data['image_url']}")
             card, created = TestCard.objects.update_or_create(
                 card_number=card_data['card_number'],
                 defaults=card_data
@@ -60,8 +81,10 @@ class Command(BaseCommand):
             
             if created:
                 created_count += 1
+                print(f"Created new card #{card.card_number} with image_url: {card.image_url}")
             else:
                 updated_count += 1
+                print(f"Updated card #{card.card_number} with image_url: {card.image_url}")
             
             self.stdout.write(
                 self.style.SUCCESS(

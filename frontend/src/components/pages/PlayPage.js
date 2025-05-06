@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Row, Col, Card, Button } from 'react-bootstrap';
+import { Container, Row, Col, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 const PlayPage = () => {
@@ -15,71 +15,31 @@ const PlayPage = () => {
         </Col>
       </Row>
       
-      <Row>
-        <Col>
-          <p className="lead mb-4">
-            Выберите режим игры из предложенных вариантов:
-          </p>
-        </Col>
-      </Row>
-      
-      <Row>
-        <Col md={4} className="mb-4">
-          <Card className="h-100">
-            <Card.Header className="bg-success text-white">
-              <h5 className="mb-0">Легкий режим</h5>
-            </Card.Header>
-            <Card.Body>
-              <Card.Text>
-                Подходит для начинающих игроков. Содержит базовые задания и подсказки.
-              </Card.Text>
-              <Button variant="success" className="w-100">Начать игру</Button>
-            </Card.Body>
-          </Card>
-        </Col>
-        
-        <Col md={4} className="mb-4">
-          <Card className="h-100">
-            <Card.Header className="bg-warning text-dark">
-              <h5 className="mb-0">Средний режим</h5>
-            </Card.Header>
-            <Card.Body>
-              <Card.Text>
-                Для игроков с опытом. Задания среднего уровня сложности без подсказок.
-              </Card.Text>
-              <Button variant="warning" className="w-100">Начать игру</Button>
-            </Card.Body>
-          </Card>
-        </Col>
-        
-        <Col md={4} className="mb-4">
-          <Card className="h-100">
-            <Card.Header className="bg-danger text-white">
-              <h5 className="mb-0">Сложный режим</h5>
-            </Card.Header>
-            <Card.Body>
-              <Card.Text>
-                Для опытных игроков. Сложные задания, ограничение по времени.
-              </Card.Text>
-              <Button variant="danger" className="w-100">Начать игру</Button>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-      
-      <Row className="mt-4">
-        <Col>
-          <Card className="bg-light">
-            <Card.Body>
-              <h4>Таблица лидеров</h4>
-              <p className="mb-3">Лучшие результаты:</p>
-              <ol>
-                <li>Игрок 1 - 1500 очков</li>
-                <li>Игрок 2 - 1350 очков</li>
-                <li>Игрок 3 - 1200 очков</li>
-              </ol>
-            </Card.Body>
-          </Card>
+      <Row className="justify-content-center">
+        <Col xs={12} sm={10} md={6} lg={4} className="d-grid gap-4">
+          <Button 
+            variant="primary" 
+            size="lg" 
+            className="py-3"
+          >
+            Создать игру
+          </Button>
+          
+          <Button 
+            variant="success" 
+            size="lg" 
+            className="py-3"
+          >
+            Присоединиться к игре
+          </Button>
+          
+          <Button 
+            variant="info" 
+            size="lg" 
+            className="py-3"
+          >
+            Свободные комнаты
+          </Button>
         </Col>
       </Row>
     </Container>

@@ -51,6 +51,7 @@ def create_test_cards():
             'correct_answer': 2,
             'image_url': 'https://via.placeholder.com/400x200?text=Database+Systems'
         }
+        
     ]
     
     created_count = 0

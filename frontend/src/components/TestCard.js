@@ -11,6 +11,7 @@ const TestCard = ({ card, onSubmitResult, onNextCard }) => {
   // Добавим отладочный лог при монтировании и обновлении карточки
   useEffect(() => {
     console.log('TestCard рендеринг с данными:', card);
+    console.log('Image URL:', card.image_url);
     if (!card) {
       console.warn('Карточка не получена или пустой объект!');
     }
@@ -61,8 +62,7 @@ const TestCard = ({ card, onSubmitResult, onNextCard }) => {
   return (
     <Card className="border-0 shadow-sm">
       <Card.Body className="p-4">
-        <div className="d-flex justify-content-between mb-3 align-items-center">
-          <h3 className="mb-0">Вопрос {card.card_number}</h3>
+        <div className="d-flex justify-content-end mb-3">
           {submitted && (
             <span className={`badge ${isCorrect ? 'bg-success' : 'bg-danger'} fs-6`}>
               {isCorrect ? 'Правильно' : 'Неправильно'}
