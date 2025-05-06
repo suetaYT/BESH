@@ -6,6 +6,7 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y \
     build-essential \
     libpq-dev \
+    netcat-traditional \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements file
@@ -29,10 +30,22 @@ ENV DJANGO_SETTINGS_MODULE=backend.settings
 RUN mkdir -p static && \
     python manage.py collectstatic --noinput || true
 
-# Run migrations
-RUN python manage.py migrate
+# Create startup script
+RUN echo '#!/bin/sh\n\
+echo "Waiting for database..."\n\
+while ! nc -z $POSTGRES_HOST $POSTGRES_PORT; do\n\
+  sleep 0.1\n\
+done\n\
+echo "Database is up!"\n\
+\n\
+echo "Running migrations..."\n\
+python manage.py migrate\n\
+\n\
+echo "Starting Gunicorn..."\n\
+exec gunicorn --bind 0.0.0.0:8000 --workers 2 --timeout 120 backend.wsgi:application\n\
+' > /app/start.sh && chmod +x /app/start.sh
 
 EXPOSE 8000
 
-# Use shell form to allow environment variable expansion
-CMD gunicorn --bind 0.0.0.0:8000 --workers 2 --timeout 120 backend.wsgi:application 
+# Use the startup script
+CMD ["/app/start.sh"] 
