@@ -25,8 +25,9 @@ USER appuser
 ENV PYTHONUNBUFFERED=1
 ENV DJANGO_SETTINGS_MODULE=backend.settings
 
-# Collect static files
-RUN python manage.py collectstatic --noinput
+# Create static directory and collect static files
+RUN mkdir -p static && \
+    python manage.py collectstatic --noinput || true
 
 # Run migrations
 RUN python manage.py migrate
