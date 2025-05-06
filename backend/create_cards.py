@@ -19,7 +19,7 @@ def create_test_cards():
             'option_3': '15',
             'option_4': '20',
             'correct_answer': 3,
-            'image_url': 'https://via.placeholder.com/400x200?text=React+Hooks'
+            'image_url': 'https://via.placeholder.com/400x200?text=Card+1'
         },
         {
             'card_number': 2,
@@ -29,7 +29,7 @@ def create_test_cards():
             'option_3': 'В зависимости от выпавших кубиков',
             'option_4': 'В любом направлении, по желанию игрока',
             'correct_answer': 1,
-            'image_url': 'https://via.placeholder.com/400x200?text=REST+API'
+            'image_url': 'https://via.placeholder.com/400x200?text=Card+2'
         },
         {
             'card_number': 3,
@@ -39,7 +39,7 @@ def create_test_cards():
             'option_3': 'Ставить шесть фишек в ряд',
             'option_4': 'Ставить фишку на клетку, где уже стоит фишка противника',
             'correct_answer': 4,
-            'image_url': 'https://via.placeholder.com/400x200?text=MVC+Architecture'
+            'image_url': 'https://via.placeholder.com/400x200?text=Card+3'
         },
         {
             'card_number': 4,
@@ -49,7 +49,7 @@ def create_test_cards():
             'option_3': 'С разбега в карьер',
             'option_4': 'Из дома во двор',
             'correct_answer': 2,
-            'image_url': 'https://via.placeholder.com/400x200?text=Database+Systems'
+            'image_url': 'https://via.placeholder.com/400x200?text=Card+4'
         }
         
     ]
@@ -72,6 +72,16 @@ def create_test_cards():
             print(f'Updated test card #{card.card_number}')
     
     print(f'Created {created_count} new test cards and updated {updated_count} existing ones.')
+    
+    # Проверка количества карточек в базе данных
+    cards_count = TestCard.objects.count()
+    print(f"Total cards in database: {cards_count}")
+    
+    # Вывод всех карточек для проверки
+    all_cards = TestCard.objects.all()
+    print("All cards in database:")
+    for card in all_cards:
+        print(f"Card #{card.card_number}: {card.question[:30]}... | Image URL: {card.image_url}")
 
 if __name__ == '__main__':
     print('Creating test cards...')

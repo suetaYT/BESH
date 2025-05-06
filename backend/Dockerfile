@@ -48,6 +48,9 @@ echo "Database is up!"\n\
 echo "Running migrations..."\n\
 python manage.py migrate\n\
 \n\
+echo "Creating test cards..."\n\
+python create_cards.py\n\
+\n\
 echo "Starting Gunicorn..."\n\
 exec gunicorn --bind 0.0.0.0:8000 --workers 2 --timeout 120 config.wsgi:application\n\
 ' > /app/start.sh && chmod +x /app/start.sh
