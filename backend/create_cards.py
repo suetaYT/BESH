@@ -57,23 +57,23 @@ def create_test_cards():
         },
         {
             'card_number': 5,
-            'question': 'Какой размер имеет стандартная доска для шеш-беш?',
+            'question': 'Какой размер имеет доска для нард?',
             'option_1': '15 на 15 клеток',
-            'option_2': '24 клетки (треугольники)',
+            'option_2': '20 клеток (пунктов)',
             'option_3': '8 на 8 клеток',
-            'option_4': '64 клетки в форме ромба',
+            'option_4': '24 клетки (пункта)',
             'correct_answer': 2,
             'image_url': '/boardimgrules5.jpg'
         },
         {
             'card_number': 6,
-            'question': 'Сколько кубиков используется в игре шеш-беш?',
-            'option_1': 'Один',
-            'option_2': 'Два',
-            'option_3': 'Три',
-            'option_4': 'Четыре',
+            'question': 'Сколько и какие кости используется в нардах?',
+            'option_1': 'Один кубик 6 граней',
+            'option_2': 'Два кубика 6 граней',
+            'option_3': 'Два кубика 8 граней',
+            'option_4': 'Один кубик 12 граней',
             'correct_answer': 2,
-            'image_url': '/boardimgr2.jpg'
+            'image_url': '/boardimg2.jpg'
         },
         {
             'card_number': 7,
@@ -97,8 +97,8 @@ def create_test_cards():
         }
     ]
     
-    created_count = 0
-    updated_count = 0
+    created_count =0
+    updated_count =0
     
     for card_data in test_cards:
         # Check if the card already exists
