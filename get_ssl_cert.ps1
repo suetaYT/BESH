@@ -15,10 +15,10 @@ docker-compose up -d frontend
 Write-Host "Waiting for nginx to start..."
 Start-Sleep -Seconds 10
 
-# Запросить сертификат
+# Запросить сертификат (домены указываются без портов)
 Write-Host "Requesting SSL certificate..."
 docker-compose run --rm certbot certonly --webroot -w /var/www/certbot `
-  --email minaumov02.17@yandex.ru -d шеш-беш.рф -d xn--e1afchk6c7d.xn--p1ai --agree-tos --no-eff-email
+  --email minaumov02.17@yandex.ru -d xn----btbkc5gbd.xn--p1ai --agree-tos --no-eff-email
 
 # Перезапустить все сервисы для применения SSL
 Write-Host "Restarting all services to apply SSL configuration..."
@@ -27,5 +27,5 @@ docker-compose up -d
 
 Write-Host "SSL certificate installation completed."
 Write-Host "Your site should now be available at:"
-Write-Host "http://шеш-беш.рф (will redirect to HTTPS if certificate was obtained)"
-Write-Host "https://шеш-беш.рф (if certificate was successfully obtained)" 
+Write-Host "http://xn----btbkc5gbd.xn--p1ai"
+Write-Host "https://xn----btbkc5gbd.xn--p1ai (if certificate was successfully obtained)" 

@@ -29,7 +29,7 @@ COPY ssl.conf /etc/nginx/ssl.conf.template
 
 # Создадим скрипт для проверки наличия сертификатов
 RUN echo '#!/bin/sh\n\
-if [ -f /etc/letsencrypt/live/шеш-беш.рф/fullchain.pem ] && [ -f /etc/letsencrypt/live/шеш-беш.рф/privkey.pem ]; then\n\
+if [ -f /etc/letsencrypt/live/xn----btbkc5gbd.xn--p1ai/fullchain.pem ] && [ -f /etc/letsencrypt/live/xn----btbkc5gbd.xn--p1ai/privkey.pem ]; then\n\
   echo "SSL certificates found, enabling HTTPS"\n\
   cp /etc/nginx/ssl.conf.template /etc/nginx/conf.d/ssl.conf\n\
 else\n\
