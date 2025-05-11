@@ -39,6 +39,11 @@ fi\n\
 \n\
 exec nginx -g "daemon off;"\n' > /docker-entrypoint.sh && chmod +x /docker-entrypoint.sh
 
+# Add this before any apt-get commands
+RUN apt-get update && apt-get install -y --no-install-recommends gnupg dirmngr && \
+    rm -rf /var/lib/apt/lists/* && \
+    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 648ACFD622F3D138 0E98404D386FA1D9 DCC9EFBF77E11517
+
 EXPOSE 80 443
 
 CMD ["/docker-entrypoint.sh"] 
