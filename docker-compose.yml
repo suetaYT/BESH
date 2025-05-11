@@ -4,11 +4,15 @@ services:
   frontend:
     build: ./frontend
     ports:
-      - "3000:80"
+      - "80:80"
+      - "443:443"
     depends_on:
       - backend
     networks:
       - app-network
+    volumes:
+      - ./certbot/conf:/etc/letsencrypt:ro
+      - ./certbot/www:/var/www/certbot
 
   backend:
     build:
@@ -23,7 +27,7 @@ services:
       - ALLOWED_HOSTS=localhost,127.0.0.1,77.222.38.140,шеш-беш.рф,*
       - DATABASE_URL=postgres://postgres:postgres@db:5432/postgres
       - SECRET_KEY=your-secret-key-here
-      - CORS_ALLOWED_ORIGINS=http://localhost:3000,http://127.0.0.1:3000,http://77.222.38.140:3000,http://шеш-беш.рф:3000
+      - CORS_ALLOWED_ORIGINS=http://localhost,http://127.0.0.1,http://77.222.38.140,http://шеш-беш.рф,https://шеш-беш.рф
       - CORS_ALLOW_ALL_ORIGINS=True
       - PYTHONUNBUFFERED=1
       - MEDIA_URL=/media/
@@ -61,6 +65,14 @@ services:
     restart: unless-stopped
     ports:
       - "5432:5432"
+
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    depends_on:
+      - frontend
 
 networks:
   app-network:
